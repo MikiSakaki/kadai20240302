@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400&family=Varela+Round&display=swap'); 
+* {
+font-family: 'M PLUS Rounded 1c', sans-serif;
+letter-spacing: 1px;
+}
+
+main{
+    background-color: #f4eccc;
+}
+
+h1{
+    text-align: center;
+    font-size: 62px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #b3d677;
+}
+
+.lead{
+    text-align: center;
+    font-size: 32px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #b3d677;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+}
+
+select {
+    width: 100%;
+}
+
+table th, table td {
+    border: 1px solid #ddd; /* 枠線を1本に */
+}
+
+td select {
+    width: 100%; /* セレクトボックスを親要素いっぱいに広げる */
+    box-sizing: border-box; /* 幅にパディングとボーダーを含める */
+    text-align: center; /* セレクトボックスの中のテキストを中央に寄せる */
+}
+
+footer{
+    background-color: #fff;
+    border-bottom:1px solid #ccc;
+    text-align: center;
+}
+
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  button {
+    margin: 5px;
+  }
+
+   /* 行を追加するボタンのスタイル */
+   .addButton {
+    width: 150px; /* ボタンの横幅 */
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #968bd2; /* ボタンカラー */
+    color: white; /* ボタンテキストの色 */
+
+    /* ホバー時のスタイル */
+    transition: background-color 0.3s ease;
+  }
+
+  .addButton:hover {
+    background-color: rgba(0, 0, 255, 0.7); /* ホバー時の透過効果 */
+  }
+
+  /* 保存ボタンのスタイル */
+  .saveButton {
+    width: 150px; /* ボタンの横幅 */
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #968bd2; /* ボタンカラー */
+    color: white; /* ボタンテキストの色 */
+
+    /* ホバー時のスタイル */
+    transition: background-color 0.3s ease;
+  }
+
+  .saveButton:hover {
+    background-color: rgba(0, 0, 255, 0.7); /* ホバー時の透過効果 */
+  }

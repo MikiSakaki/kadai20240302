@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<meta charset="UTF-8">
+<title>ベビ語録</title>
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/kadai_memo.css">
+
+<head>
+  <meta charset="UTF-8">
+
+  <main>
+    <h1>ベビ語録</h1>
+
+    <div class="lead">
+    <p>
+        日々成長を見せる赤ちゃんの言葉を思い出と共に残しませんか？
+    </p>
+   </div>
+
+ 
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    
+  </style>
+</head>
+<body>
+
+<table id="dataTable">
+  <tr>
+    <th>年</th>
+    <th>月</th>
+    <th>日</th>
+    <th>語録</th>
+    <th>意味</th>
+    <th>その時の様子</th>
+    <th>行の削除</th>
+  </tr>
+
+</main>
+  <!-- 2行目から11行目までの初期データ表示 -->
+  <script>
+    // ローカルストレージからデータを読み込む
+    var savedData = JSON.parse(localStorage.getItem('savedData')) || [];
+
+    // 保存されたデータをテーブルに反映
+    for (var i = 0; i < savedData.length; i++) {
+      document.write('<tr>');
+      document.write('<td><select class="yearSelect">' + generateOptions(2024, 2030, savedData[i].year) + '</select></td>');
+      document.write('<td><select class="monthSelect">' + generateOptions(1, 12, savedData[i].month) + '</select></td>');
+      document.write('<td><select class="daySelect">' + generateOptions(1, 31, savedData[i].day) + '</select></td>');
+      document.write('<td><input type="text" class="phraseInput" value="' + savedData[i].phrase + '"></td>');
+      document.write('<td><input type="text" class="meaningInput" value="' + savedData[i].meaning + '"></td>');
+      document.write('<td><input type="text" class="situationInput" value="' + savedData[i].situation + '"></td>');
+      document.write('<td><button onclick="deleteRow(this)">削除</button></td>');
+      document.write('</tr>');
+    }
+
+    function generateOptions(start, end, selected) {
+      var options = '';
+      for (var i = start; i <= end; i++) {
+        var isSelected = (i == selected) ? 'selected' : '';
+        options += '<option value="' + i + '" ' + isSelected + '>' + i + '</option>';
+      }
+      return options;
+    }
+  </script>
+</table>
+
+<button class="addButton" onclick="addRow()">行を追加する</button>
+<button class="saveButton" onclick="saveData()">保存</button>
+
+<script>
+  function deleteRow(button) {
+    var row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+    saveData(); // 行を削除した後、データを保存
+  }
+
+  function addRow() {
+    var table = document.getElementById('dataTable');
+    var newRow = table.insertRow(-1); // -1は最終行に追加することを示します
+
+    // 新しい行にセルを追加
+    for (var i = 0; i < 6; i++) {
+      var cell = newRow.insertCell(i);
+
+      if (i >= 0 && i <= 2) {
+        // 年、月、日のセレクトボックスを追加
+        var select = document.createElement('select');
+        select.className = 'yearSelect';
+        if (i === 1) select.className = 'monthSelect';
+        if (i === 2) select.className = 'daySelect';
+        select.innerHTML = generateOptions((i === 0) ? 2024 : 1, (i === 0) ? 2030 : ((i === 1) ? 12 : 31), (i === 0) ? 2024 : 1);
+        cell.appendChild(select);
+      } else {
+        // テキスト入力エリアを追加
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.className = (i === 3) ? 'phraseInput' : (i === 4) ? 'meaningInput' : 'situationInput';
+        cell.appendChild(input);
+      }
+    }
+
+    // 削除ボタンを追加
+    var deleteButtonCell = newRow.insertCell(6);
+    var deleteButton = document.createElement('button');
+    deleteButton.textContent = '削除';
+    deleteButton.onclick = function() {
+      deleteRow(this);
+    };
+    deleteButtonCell.appendChild(deleteButton);
+  }
+
+  function generateOptions(start, end, selected) {
+    var options = '';
+    for (var i = start; i <= end; i++) {
+      var isSelected = (i == selected) ? 'selected' : '';
+      options += '<option value="' + i + '" ' + isSelected + '>' + i + '</option>';
+    }
+    return options;
+  }
+
+  function saveData() {
+    var data = [];
+
+    var table = document.getElementById('dataTable');
+    var rows = table.getElementsByTagName('tr');
+
+    for (var i = 1; i < rows.length; i++) {
+      var cells = rows[i].getElementsByTagName('td');
+      var rowData = {
+        year: cells[0].querySelector('.yearSelect').value,
+        month: cells[1].querySelector('.monthSelect').value,
+        day: cells[2].querySelector('.daySelect').value,
+        phrase: cells[3].querySelector('.phraseInput').value,
+        meaning: cells[4].querySelector('.meaningInput').value,
+        situation: cells[5].querySelector('.situationInput').value
+      };
+      data.push(rowData);
+    }
+
+    // データをローカルストレージに保存
+    localStorage.setItem('savedData', JSON.stringify(data));
+  }
+</script>
+
+</body>
+</html>
